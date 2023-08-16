@@ -6,6 +6,7 @@
 
   <groupId>org.example</groupId>
   <artifactId>spider</artifactId>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
 
   <name>spider</name>
@@ -23,8 +24,19 @@
 
   <dependencies>
 
+<!--    图形数据库neo4j java操作包 这个版本只支持java17-->
+<!--    <dependency>-->
+<!--      <groupId>org.neo4j</groupId>-->
+<!--      <artifactId>neo4j</artifactId>-->
+<!--      <version>5.10.0</version>-->
+<!--    </dependency>-->
 
-
+<!--    支持java8+-->
+    <dependency>
+      <groupId>org.neo4j.driver</groupId>
+      <artifactId>neo4j-java-driver</artifactId>
+      <version>4.4.0</version>
+    </dependency>
 
 <!--    AOP-->
     <dependency>
@@ -177,6 +189,25 @@
 
 
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
   </build>
 
 

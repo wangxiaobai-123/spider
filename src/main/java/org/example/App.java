@@ -1,13 +1,7 @@
 package org.example;
 
-import org.example.aspect.TimeAspect;
-import org.example.data.Disease;
+import org.example.dao.entity.Disease;
 import org.example.repository.DiseaseRepository;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import sun.security.provider.ConfigFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -29,10 +23,13 @@ public class App
 
     public static void main( String[] args ) throws IOException, SQLException, ClassNotFoundException {
 
-        App.say();
+
 
 //        AnnotationConfig config = new AnnotationConfiguration();
 //        config.aspectOf(TimeAspect.class);
+
+
+
 
         long startTime = System.currentTimeMillis();
 

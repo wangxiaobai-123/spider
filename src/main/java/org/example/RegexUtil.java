@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegexUtil {
     public static boolean isChineseCharacter (String str) {
         char[] chars = str.toCharArray();
@@ -12,6 +15,17 @@ public class RegexUtil {
             }
         }
         return false;
+    }
+
+    public static String extractSubstring(String input, String pattern) {
+        Pattern regexPattern = Pattern.compile(pattern);
+        Matcher matcher = regexPattern.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+
+        return null;
     }
 
 }

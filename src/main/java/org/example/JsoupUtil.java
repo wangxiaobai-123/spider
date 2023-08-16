@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dao.entity.Disease;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,6 +9,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class JsoupUtil {
 
@@ -62,7 +65,7 @@ public class JsoupUtil {
     }
 
     // 也能用，就是链接不一样
-    public static List<String> getDiseaseList(Document document) {
+    public static List<String> getDiseaseNameList(Document document) {
         Elements elements = document.select(".ks-ill-list.clearfix.mt10");
         List<String> stringList = new ArrayList<>();
         // 遍历提取到的元素
@@ -78,4 +81,22 @@ public class JsoupUtil {
         return stringList;
     }
 
+    public static List<String> getDiseaseNameListOf(String linkOfDepartment) throws IOException {
+        List<String> diseaseNameList;
+
+        Document document = Jsoup.connect(linkOfDepartment).get();
+        Elements elementsByClass = document.getElementsByClass("ks-ill-list clearfix mt10");
+        List<String> stringList = new ArrayList<>();
+        for (Element element : elementsByClass) {
+            Elements a = element.getElementsByTag("a");
+            for (Element element1 : a) {
+                String title = element1.attr("title");
+                stringList.add(title);
+            }
+        }
+        Set<String> set = stringList.stream().collect(Collectors.toSet());
+        diseaseNameList = new ArrayList<>(set);
+
+        return diseaseNameList;
+    }
 }

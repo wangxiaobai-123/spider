@@ -1,4 +1,4 @@
-package org.example.data;
+package org.example.dao.entity;
 
 import lombok.Data;
 
@@ -62,6 +62,5 @@ public class Disease {
         this.type = type;
     }
 
-    public Disease() {
-    }
+
 }

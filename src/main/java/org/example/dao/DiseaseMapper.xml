@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 绑定一个对应的  Dao/Mapper接口-->
+<mapper namespace="org.example.dao.DiseaseMapper">
+    <!--    select 查询语句-->
+    <select id="getDiseaseList" resultType="org.example.dao.entity.Disease">
+            select * from xywy
+    </select>
+</mapper>

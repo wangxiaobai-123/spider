@@ -1,15 +1,19 @@
 package org.example;
 
-import org.example.data.Disease;
+import org.example.dao.entity.Disease;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SpiderService {
     public static final String DISEASE_URL = "http://jib.xywy.com/html/jingbu.html";
     public static final String SYMPTOM_URL = "http://zzk.xywy.com/p/bi.html";
+
 
 
     public static Map<String, List<Disease>> getDiseaseMap() throws IOException {
@@ -54,7 +58,7 @@ public class SpiderService {
 
 
 
-            List<String> diseaseStringList = JsoupUtil.getDiseaseList(document);
+            List<String> diseaseStringList = JsoupUtil.getDiseaseNameList(document);
             Set<String> set = new HashSet<>(diseaseStringList);
             List<String> distinctList = new ArrayList<>(set);
 
@@ -88,7 +92,7 @@ public class SpiderService {
             String part = JsoupUtil.getPart(document);
 
             // 再找部位对应的症状集合
-            List<String> diseaseStringList = JsoupUtil.getDiseaseList(document);
+            List<String> diseaseStringList = JsoupUtil.getDiseaseNameList(document);
             Set<String> set = new HashSet<>(diseaseStringList);
             List<String> distinctList = new ArrayList<>(set);
 
@@ -105,6 +109,39 @@ public class SpiderService {
         }
 
         return diseaseListMap;
+    }
+
+    List<String> getDiseaseNameListOf(String department) throws IOException {
+
+        List<Disease> diseaseList = new ArrayList<>();
+
+        String linkOfDepartment = getLinkOfDepartment(department);
+
+
+        List<String> diseaseNameList;
+
+        Document document = Jsoup.connect(linkOfDepartment).get();
+        Elements elementsByClass = document.getElementsByClass("ks-ill-list clearfix mt10");
+        List<String> stringList = new ArrayList<>();
+        for (Element element : elementsByClass) {
+            Elements a = element.getElementsByTag("a");
+            for (Element element1 : a) {
+                String title = element1.attr("title");
+                stringList.add(title);
+            }
+        }
+        Set<String> set = stringList.stream().collect(Collectors.toSet());
+        diseaseNameList = new ArrayList<>(set);
+
+        return diseaseNameList;
+    }
+
+    public String getLinkOfDepartment(String department) {
+        String linkOfDepartment = null;
+
+        linkOfDepartment = "http://zzk.xywy.com/p/" + department + ".html";
+
+        return linkOfDepartment;
     }
 
 }
